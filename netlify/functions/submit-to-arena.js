@@ -5,7 +5,7 @@ exports.handler = async (event) => {
         return { statusCode: 405, body: 'Method Not Allowed' };
     }
 
-    const { imageUrl, imageDescription } = JSON.parse(event.body);
+    const { imageTitle, imageUrl, imageDescription } = JSON.parse(event.body);
     const token = process.env.ARENA_ACCESS_TOKEN;
 
     if (!token) {
@@ -16,33 +16,30 @@ exports.handler = async (event) => {
         };
     }
 
-    // If you have a title field from your form, you can prepend it to the description.
-    // Let's say you adjusted your form and JS to include `imageTitle`:
-    // const { imageUrl, imageTitle, imageDescription } = JSON.parse(event.body);
-    // Then construct your full description like so:
-    const fullDescription = `Title: ${imageTitle}\n\nDescription: ${imageDescription}`;
-
     try {
         const headers = {
             'Authorization': `Bearer ${token}`,
             'Content-Type': 'application/json'
         };
 
+        // Including the title within the description field
+        let combinedDescription = imageTitle ? `${imageTitle}\n\n${imageDescription}` : imageDescription;
+
         const response = await axios.post(`https://api.are.na/v2/channels/testing-wrkgn_q6vbg/blocks`, {
             content: imageUrl,
-            description: fullDescription // Use the modified description with the title
+            description: combinedDescription
         }, { headers });
 
         return {
             statusCode: 200,
-            body: JSON.stringify({ message: "Image submitted successfully." })
+            body: JSON.stringify({ message: "Image submitted successfully to Are.na." })
         };
     } catch (error) {
         console.error('Error submitting to Are.na:', error);
         return {
             statusCode: error.response.status,
             body: JSON.stringify({
-                message: "Failed to submit image.",
+                message: "Failed to submit image to Are.na.",
                 error: error.message,
                 detail: error.response?.data
             })

@@ -21,7 +21,7 @@ exports.handler = async (event) => {
         };
 
         // Example POST request to Are.na
-        const response = await axios.post(`https://api.are.na/v2/channels/YOUR_CHANNEL_SLUG/blocks`, {
+        const response = await axios.post(`https://api.are.na/v2/channels/testing-wrkgn_q6vbg/blocks`, {
             source: "https://example.com/image.png",
             description: "Example image"
         }, { headers });

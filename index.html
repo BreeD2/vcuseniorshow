@@ -7,6 +7,49 @@
 
 </head>
 <body>
+  <style>
+  /* Style for the header */
+h1 {
+  color: #333; /* Dark gray color */
+  font-family: Arial, sans-serif; /* Arial font */
+  text-align: center; /* Center-align the text */
+  margin-top: 60px; /* Add some space below the header */
+}
+
+/* Style for the form */
+#imageForm {
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* Center-align form items */
+  gap: 10px; /* Add space between form items */
+  margin: 0 auto; /* Center the form in the page */
+  width: 400px; /* Set form width */
+}
+
+/* Style for input fields */
+#imageForm input[type="url"] {
+  width: 100%; /* Make input field take full width of the form */
+  padding: 10px; /* Add some padding inside the input field */
+  border: 1px solid #ccc; /* Light gray border */
+  border-radius: 5px; /* Rounded corners */
+}
+
+/* Style for submit button */
+#imageForm input[type="submit"] {
+  background-color: dodgerblue; /* Green background */
+  color: white; /* White text */
+  padding: 10px 20px; /* Padding inside the button */
+  border: none; /* Remove border */
+  border-radius: 5px; /* Rounded corners */
+  cursor: pointer; /* Change cursor to pointer when hovering */;
+  margin-top: 20px;
+}
+
+/* Change background and text color of submit button on hover */
+#imageForm input[type="submit"]:hover {
+  background-color: rgb(0, 126, 180);
+}
+</style>
 
   <h1>Image Submission Form</h1>
      <form id="imageForm">

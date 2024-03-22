@@ -4,50 +4,38 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Form</title>
+
 </head>
 <body>
 
-<h1>Image Submission Form</h1>
-<form id="imageForm">
-    <!-- Input for submitting image URL -->
-    <input type="url" id="imageUrl" name="imageUrl" placeholder="Enter Image URL">
-    <!-- Input for file upload -->
-    <input type="file" id="imageFile" name="imageFile" accept="image/*">
-    <input type="submit" value="Submit Image">
-</form>
+  <h1>Image Submission Form</h1>
+     <form id="imageForm">
+         <input type="url" id="imageUrl" name="imageUrl" placeholder="Enter Image URL">
+         <input type="submit" value="Submit Image">
+     </form>
 
-<script>
-document.getElementById('imageForm').addEventListener('submit', async (e) => {
-    e.preventDefault();
 
-    const imageUrl = document.getElementById('imageUrl').value;
-    const imageFile = document.getElementById('imageFile').files[0];
 
-    const formData = new FormData();
+     <script>
+   document.getElementById('imageForm').addEventListener('submit', async (e) => {
+       e.preventDefault();
+       const imageUrl = document.getElementById('imageUrl').value;
 
-    // Check if user has entered a URL or selected a file, and append the appropriate one
-    if (imageUrl) {
-        formData.append('imageUrl', imageUrl);
-    } else if (imageFile) {
-        formData.append('imageFile', imageFile);
-    } else {
-        alert('Please enter an image URL or select a file.');
-        return;
-    }
+       // Corrected the fetch URL to match the Netlify function endpoint
+       const response = await fetch('/.netlify/functions/submit-to-arena', {
+           method: 'POST',
+           headers: { 'Content-Type': 'application/json' },
+           body: JSON.stringify({ imageUrl })
+       });
 
-    // Adjusted fetch to use FormData and removed content-type header to allow browser to set it with the correct boundary
-    const response = await fetch('/.netlify/functions/submit-to-arena', {
-        method: 'POST',
-        body: formData // Send formData that may contain either imageUrl or a file
-    });
-
-    if (response.ok) {
-        alert("Image submitted successfully.");
-    } else {
-        alert("Failed to submit image.");
-    }
-});
+       if (response.ok) {
+           alert("Image submitted successfully.");
+       } else {
+           alert("Failed to submit image.");
+       }
+   });
 </script>
+
 
 </body>
 </html>

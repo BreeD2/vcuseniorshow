@@ -17,9 +17,10 @@
 </head>
 <body>
   <style>
+
     /* Style for the header */
     h1 {
-      color: #333; /* Dark gray color */
+      color: #59caec; /* Dark gray color */
       font-family: Arial, sans-serif; /* Arial font */
       text-align: center; /* Center-align the text */
       margin-top: 60px; /* Add some space below the header */
@@ -42,7 +43,7 @@
     #imageForm textarea {
       width: 100%; /* Make fields take full width of the form */
       padding: 10px; /* Add some padding inside */
-      border: 1px solid #ccc; /* Light gray border */
+      border: 1px solid #ffc60a; /* Light gray border */
       border-radius: 5px; /* Rounded corners */
       margin-top: 10px; /* Add space above each field */;
       font-family: Arial, sans-serif; /* Arial font */
@@ -50,7 +51,7 @@
 
     /* Style for submit button */
     #imageForm input[type="submit"] {
-      background-color: dodgerblue; /* Blue background */
+      background-color: #ed2087; /* Blue background */
       color: white; /* White text */
       padding: 10px 20px; /* Padding inside the button */
       border: none; /* Remove border */
@@ -62,7 +63,7 @@
 
     /* Change background and text color of submit button on hover */
     #imageForm input[type="submit"]:hover {
-      background-color: rgb(0, 126, 180); /* Darker blue on hover */
+      background-color: #86c546; /* Darker blue on hover */
     }
   </style>
 
@@ -76,24 +77,32 @@
 
 
     <script>
-           document.getElementById('imageForm').addEventListener('submit', async (e) => {
-               e.preventDefault();
-               const imageName = document.getElementById('imageName').value;
-               const imageUrl = document.getElementById('imageUrl').value;
-               const imageDescription = document.getElementById('imageDescription').value;
+    document.getElementById('imageForm').addEventListener('submit', async (e) => {
+      e.preventDefault();
 
-               const response = await fetch('/.netlify/functions/submit-to-arena', {
-                   method: 'POST',
-                   headers: { 'Content-Type': 'application/json' },
-                   body: JSON.stringify({ imageName, imageUrl, imageDescription })
-               });
+      const imageTitle = document.getElementById('imageTitle').value;
+      const imageDescription = document.getElementById('imageDescription').value;
+      const imageUrl = document.getElementById('imageUrl').value;
 
-               if (response.ok) {
-                   alert("Image submitted successfully.");
-               } else {
-                   alert("Failed to submit image.");
-               }
-           });
+      try {
+          const response = await fetch('/.netlify/functions/submit-to-arena', {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({ imageTitle, imageUrl, imageDescription })
+          });
+
+          if (response.ok) {
+              alert("Image submitted successfully.");
+          } else {
+              console.error('Submission to Are.na failed:', await response.text());
+              alert("Failed to submit image to Are.na.");
+          }
+      } catch (error) {
+          console.error('Error submitting to Are.na:', error);
+          alert("Failed to submit image to Are.na.");
+      }
+  });
+
        </script>
 
 

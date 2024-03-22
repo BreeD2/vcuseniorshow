@@ -5,48 +5,43 @@ exports.handler = async (event) => {
         return { statusCode: 405, body: 'Method Not Allowed' };
     }
 
-    // Parse the incoming event body to access imageUrl
-    const { imageUrl } = JSON.parse(event.body);
-
-    // Access the ARENA_ACCESS_TOKEN environment variable
+    const { imageTitle, imageUrl, imageDescription } = JSON.parse(event.body);
     const token = process.env.ARENA_ACCESS_TOKEN;
 
-    // Check if the token is available
     if (!token) {
         console.error('ARENA_ACCESS_TOKEN is not defined.');
         return {
             statusCode: 500,
-            body: JSON.stringify({ message: "Internal Server Error: Missing Are.na access token." })
+            body: JSON.stringify({ message: "Missing Are.na access token." })
         };
     }
 
     try {
-        // Your axios request using the token
         const headers = {
             'Authorization': `Bearer ${token}`,
             'Content-Type': 'application/json'
         };
 
-        // Example POST request to Are.na
+        // Combine title and description, or just send the description
+        const description = imageTitle ? `${imageTitle}\n\n${imageDescription}` : imageDescription;
+
         const response = await axios.post(`https://api.are.na/v2/channels/testing-wrkgn_q6vbg/blocks`, {
-            source: imageUrl, // Use the parsed imageUrl
-            description: "User submitted image via Netlify function"
+            content: imageUrl,
+            description: description
         }, { headers });
 
-        // Successful response handling
         return {
             statusCode: 200,
-            body: JSON.stringify({ message: "Image submitted successfully to Are.na." })
+            body: JSON.stringify({ message: "Image submitted successfully." })
         };
     } catch (error) {
-        // Error handling
         console.error('Error submitting to Are.na:', error);
         return {
             statusCode: error.response.status,
             body: JSON.stringify({
-                message: "Failed to submit image to Are.na.",
+                message: "Failed to submit image.",
                 error: error.message,
-                detail: error.response.data
+                detail: error.response?.data
             })
         };
     }

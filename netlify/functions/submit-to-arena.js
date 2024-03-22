@@ -25,7 +25,7 @@ exports.handler = async (event) => {
         // Formatting the description to include both title and description.
         let fullDescription = `**${imageTitle}**\n${imageDescription}`;
 
-        const response = await axios.post(`https://api.are.na/v2/channels/testing-wrkgn_q6vbg/blocks`, {
+        const response = await axios.post(`https://api.are.na/v2/channels/vcu-senior-show-2024/blocks`, {
             source: imageUrl, // Correctly using the source parameter for the image URL.
             description: fullDescription, // The combined title and description.
         }, { headers });

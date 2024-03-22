@@ -69,41 +69,38 @@
 
   <h1>Image Submission Form</h1>
   <form id="imageForm">
-    <input type="text" id="imageTitle" name="imageTitle" placeholder="Enter Image Title">
+    <input type="text" id="imageTitle" name="imageTitle" placeholder="Your Name">
       <input type="url" id="imageUrl" name="imageUrl" placeholder="Enter Image URL">
       <textarea id="imageDescription" name="imageDescription" placeholder="Enter Image Description"></textarea>
       <input type="submit" value="Submit Image">
   </form>
 
 
-    <script>
-    document.getElementById('imageForm').addEventListener('submit', async (e) => {
-      e.preventDefault();
+  <script>
+  document.getElementById('imageForm').addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const imageTitle = document.getElementById('imageTitle').value;
+    const imageUrl = document.getElementById('imageUrl').value;
+    const imageDescription = document.getElementById('imageDescription').value;
 
-      const imageTitle = document.getElementById('imageTitle').value;
-      const imageDescription = document.getElementById('imageDescription').value;
-      const imageUrl = document.getElementById('imageUrl').value;
+    const response = await fetch('/.netlify/functions/submit-to-arena', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ imageTitle, imageUrl, imageDescription })
+    });
 
-      try {
-          const response = await fetch('/.netlify/functions/submit-to-arena', {
-              method: 'POST',
-              headers: { 'Content-Type': 'application/json' },
-              body: JSON.stringify({ imageTitle, imageUrl, imageDescription })
-          });
-
-          if (response.ok) {
-              alert("Image submitted successfully.");
-          } else {
-              console.error('Submission to Are.na failed:', await response.text());
-              alert("Failed to submit image to Are.na.");
-          }
-      } catch (error) {
-          console.error('Error submitting to Are.na:', error);
-          alert("Failed to submit image to Are.na.");
-      }
+    if (response.ok) {
+        // Ask the user if they want to be redirected
+        if(confirm("Image submitted successfully. Would you like to view it on Are.na?")) {
+            window.location.href = "https://www.are.na/bree-d-5s66pyu4cqo/vcu-senior-show-2024"; // Redirect to Are.na channel page
+        } else {
+            // Do nothing, stay on the current page
+        }
+    } else {
+        alert("Failed to submit image.");
+    }
   });
-
-       </script>
+</script>
 
 
 </body>

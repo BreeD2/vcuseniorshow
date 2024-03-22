@@ -22,12 +22,12 @@ exports.handler = async (event) => {
             'Content-Type': 'application/json'
         };
 
-        // Combine title and description, or just send the description
-        const description = imageTitle ? `${imageTitle}\n\n${imageDescription}` : imageDescription;
+        // Formatting the description to include both title and description.
+        let fullDescription = `**${imageTitle}**\n${imageDescription}`;
 
         const response = await axios.post(`https://api.are.na/v2/channels/testing-wrkgn_q6vbg/blocks`, {
-            content: imageUrl,
-            description: description
+            content: imageUrl, // Assuming the imageUrl is what you want to display.
+            description: fullDescription, // The combined title and description.
         }, { headers });
 
         return {
@@ -37,11 +37,11 @@ exports.handler = async (event) => {
     } catch (error) {
         console.error('Error submitting to Are.na:', error);
         return {
-            statusCode: error.response.status,
+            statusCode: error.response?.status || 500,
             body: JSON.stringify({
                 message: "Failed to submit image.",
                 error: error.message,
-                detail: error.response?.data
+                detail: error.response?.data,
             })
         };
     }

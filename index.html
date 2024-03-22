@@ -50,34 +50,35 @@ h1 {
   background-color: rgb(0, 126, 180);
 }
 </style>
+<h1>Image Submission Form</h1>
+    <form id="imageForm">
+        <input type="text" id="imageName" name="imageName" placeholder="Enter Image Name">
+        <input type="url" id="imageUrl" name="imageUrl" placeholder="Enter Image URL">
+        <textarea id="imageDescription" name="imageDescription" placeholder="Enter Image Description"></textarea>
+        <input type="submit" value="Submit Image">
+    </form>
 
-  <h1>Image Submission Form</h1>
-     <form id="imageForm">
-         <input type="url" id="imageUrl" name="imageUrl" placeholder="Enter Image URL">
-         <input type="submit" value="Submit Image">
-     </form>
 
+    <script>
+           document.getElementById('imageForm').addEventListener('submit', async (e) => {
+               e.preventDefault();
+               const imageName = document.getElementById('imageName').value;
+               const imageUrl = document.getElementById('imageUrl').value;
+               const imageDescription = document.getElementById('imageDescription').value;
 
+               const response = await fetch('/.netlify/functions/submit-to-arena', {
+                   method: 'POST',
+                   headers: { 'Content-Type': 'application/json' },
+                   body: JSON.stringify({ imageName, imageUrl, imageDescription })
+               });
 
-     <script>
-   document.getElementById('imageForm').addEventListener('submit', async (e) => {
-       e.preventDefault();
-       const imageUrl = document.getElementById('imageUrl').value;
-
-       // Corrected the fetch URL to match the Netlify function endpoint
-       const response = await fetch('/.netlify/functions/submit-to-arena', {
-           method: 'POST',
-           headers: { 'Content-Type': 'application/json' },
-           body: JSON.stringify({ imageUrl })
-       });
-
-       if (response.ok) {
-           alert("Image submitted successfully.");
-       } else {
-           alert("Failed to submit image.");
-       }
-   });
-</script>
+               if (response.ok) {
+                   alert("Image submitted successfully.");
+               } else {
+                   alert("Failed to submit image.");
+               }
+           });
+       </script>
 
 
 </body>

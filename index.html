@@ -74,32 +74,46 @@
       <textarea id="imageDescription" name="imageDescription" placeholder="Enter Image Description"></textarea>
       <input type="submit" value="Submit Image">
   </form>
+  <!-- Success Message Container -->
+<div id="successMessage" style="display:none;">
+    <p>Your image has been successfully submitted. You can view and edit your submission on Are.na:</p>
+    <!-- Link to the Are.na channel -->
+    <a href="https://www.are.na/bree-d-5s66pyu4cqo/vcu-senior-show-2024" target="_blank">VCU Senior Show 2024 Channel</a>
+</div>
 
 
   <script>
   document.getElementById('imageForm').addEventListener('submit', async (e) => {
     e.preventDefault();
+
+    // Gather form data
     const imageTitle = document.getElementById('imageTitle').value;
     const imageUrl = document.getElementById('imageUrl').value;
     const imageDescription = document.getElementById('imageDescription').value;
 
+    // Prepare the request payload
+    const payload = JSON.stringify({ imageTitle, imageUrl, imageDescription });
+
+    // Perform the fetch request
     const response = await fetch('/.netlify/functions/submit-to-arena', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ imageTitle, imageUrl, imageDescription })
+        body: payload
     });
 
+    // Check if the submission was successful
     if (response.ok) {
-        // Ask the user if they want to be redirected
-        if(confirm("Image submitted successfully. Would you like to view it on Are.na?")) {
-            window.location.href = "https://www.are.na/bree-d-5s66pyu4cqo/vcu-senior-show-2024"; // Redirect to Are.na channel page
-        } else {
-            // Do nothing, stay on the current page
-        }
+        // Display the success message and link
+        document.getElementById('successMessage').style.display = 'block';
+        // Optionally, hide the form
+        // document.getElementById('imageForm').style.display = 'none';
+        alert("Image submitted successfully. Check the Are.na channel for your submission.");
     } else {
-        alert("Failed to submit image.");
+        // Handle submission error
+        alert("Failed to submit image. Please try again.");
     }
-  });
+});
+
 </script>
 
 

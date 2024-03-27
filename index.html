@@ -119,14 +119,11 @@
 
   </style>
 
-  <form id="imageForm">
-      <h1>Image Submission Form</h1>
-      <input type="text" id="imageTitle" name="imageTitle" placeholder="Your Name">
-      <input type="url" id="imageUrl" name="imageUrl" placeholder="Enter Image URL">
-      <textarea id="imageDescription" name="imageDescription" placeholder="Enter Image Description"></textarea>
-      <input type="file" id="imageFile" name="imageFile">
-      <input type="submit" value="Submit Image">
-  </form>
+  <h1>Image Submission Form</h1>
+     <form id="imageForm">
+         <input type="url" id="imageUrl" name="imageUrl" placeholder="Enter Image URL">
+         <input type="submit" value="Submit Image">
+     </form>
 
   <!-- Success Message Container -->
 <div id="successMessage" style="display:none;">
@@ -138,44 +135,24 @@
 
   <div class="footer">2024 VCU Senior Show Image Submission Form's<br> Are.na page at: <a href="https://www.are.na/bree-d-5s66pyu4cqo/vcu-senior-show-2024">VCU Senior Show</a></div>
   <script>
-  document.getElementById('imageForm').addEventListener('submit', async (e) => {
-  e.preventDefault();
+     document.getElementById('imageForm').addEventListener('submit', async (e) => {
+         e.preventDefault();
+         const imageUrl = document.getElementById('imageUrl').value;
 
-  // Initialize FormData with the form element to automatically capture all fields
-  const formData = new FormData(document.getElementById('imageForm'));
+         // Corrected the fetch URL to match the Netlify function endpoint
+         const response = await fetch('/.netlify/functions/submit-to-arena', {
+             method: 'POST',
+             headers: { 'Content-Type': 'application/json' },
+             body: JSON.stringify({ imageUrl })
+         });
 
-  // Explicitly check for and append the image file if present
-  const imageFile = document.getElementById('imageFile').files[0];
-  if (imageFile) {
-    formData.append('imageFile', imageFile);
-  }
-
-  // Manually append other fields if needed - though this is redundant if they're already part of the form
-  // const imageTitle = document.getElementById('imageTitle').value;
-  // formData.append('imageTitle', imageTitle);
-  // const imageUrl = document.getElementById('imageUrl').value;
-  // formData.append('imageUrl', imageUrl);
-  // const imageDescription = document.getElementById('imageDescription').value;
-  // formData.append('imageDescription', imageDescription);
-
-  try {
-    const response = await fetch('/.netlify/functions/submit-to-arena', {
-      method: 'POST',
-      body: formData, // Sends the form data as multipart/form-data
-    });
-
-    if (response.ok) {
-      document.getElementById('successMessage').style.display = 'block';
-      alert("Submission successful. Check the Are.na channel for your submission.");
-    } else {
-      alert("Failed to submit. Please try again.");
-    }
-  } catch (error) {
-    console.error('Error submitting:', error);
-    alert("Failed to submit. Please try again.");
-  }
-});
-</script>
+         if (response.ok) {
+             alert("Image submitted successfully.");
+         } else {
+             alert("Failed to submit image.");
+         }
+     });
+  </script>
 
 </body>
 </html>

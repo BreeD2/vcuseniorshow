@@ -20,9 +20,9 @@ exports.handler = async (event) => {
 
   try {
     const headers = {
-      'Authorization': `Bearer ${token}`,
-      'Content-Type': 'application/json'
-    };
+  'Authorization': `Bearer ${ARENA_ACCESS_TOKEN}`,
+  'Content-Type': 'application/json' // Ensure the content type is set if sending JSON.
+};
 
     // Formatting the description to include both title and description.
     let fullDescription = `**${imageTitle}**\n${imageDescription}`;

@@ -119,14 +119,17 @@
 
   </style>
 
-<form id="imageForm">
-  <h1>Image Submission Form</h1>
+  <form id="imageForm">
+      <h1>Image Submission Form</h1>
 
-    <input type="text" id="imageTitle" name="imageTitle" placeholder="Your Name">
+      <input type="text" id="imageTitle" name="imageTitle" placeholder="Your Name">
       <input type="url" id="imageUrl" name="imageUrl" placeholder="Enter Image URL">
       <textarea id="imageDescription" name="imageDescription" placeholder="Enter Image Description"></textarea>
+      <!-- Add file input here -->
+      <input type="file" id="imageFile" name="imageFile">
       <input type="submit" value="Submit Image">
   </form>
+
   <!-- Success Message Container -->
 <div id="successMessage" style="display:none;">
     <p>Your image has been successfully submitted. You can view and edit your submission on Are.na:</p>
@@ -172,6 +175,47 @@
     }
 });
 
+</script>
+
+<script>
+const axios = require('axios');
+const FormData = require('form-data');
+
+exports.handler = async (event, context) => {
+    // Parse the incoming request body
+    const { imageTitle, imageUrl, imageDescription, imageFile } = JSON.parse(event.body);
+
+    // Prepare form data to send to Are.na (assuming you have the file in a suitable format)
+    let formData = new FormData();
+    formData.append('title', imageTitle);
+    formData.append('description', imageDescription);
+    formData.append('image', imageFile); // This would need adjustment based on how you handle files
+
+    // Configure the request to Are.na's API
+    const config = {
+        method: 'post',
+        url: 'https://dev.are.na/v2/channels/{channel_id}/blocks',
+        headers: {
+            'Authorization': `Bearer YOUR_ARE.NA_ACCESS_TOKEN`,
+            ...formData.getHeaders()
+        },
+        data: formData
+    };
+
+    try {
+        // Make the request to Are.na
+        const response = await axios(config);
+        return {
+            statusCode: 200,
+            body: JSON.stringify({ message: "Success", data: response.data })
+        };
+    } catch (error) {
+        return {
+            statusCode: 500,
+            body: JSON.stringify({ message: "Failed to upload", error: error.toString() })
+        };
+    }
+};
 </script>
 
 

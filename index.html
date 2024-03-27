@@ -17,119 +17,82 @@
 </head>
 <body>
   <style>
-  body {
-    background-color: #c091ff;
-    font-family: Arial, sans-serif;
-  }
-  /* Style for the header */
-  h1 {
-    color: #ed2087; /* Light blue color */
-    font-family: Arial, sans-serif;
-    text-align: center;
-    margin-top: 40px;
-    margin-bottom: 20px;
-  }
+      /* Style for the header */
+      h1 {
+        color: #59caec; /* Change to your preferred color */
+        font-family: Arial, sans-serif; /* Arial font */
+        text-align: center; /* Center-align the text */
+        margin-top: 60px; /* Add some space below the header */
+      }
 
-  /* Style for the form */
-  #imageForm {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 15px;
-    margin-top: 180px;
-    padding: 20px;
-    width: 100%;
-    max-width: 400px; /* Adjust based on preference */
-    font-family: Arial, sans-serif;
-    background-color: #ffc60a;
-    border-radius: 8px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      /* Style for the form */
+      #imageForm {
+        display: flex;
+        flex-direction: column;
+        align-items: center; /* Center-align form items */
+        gap: 10px; /* Add space between form items */
+        margin: 0 auto; /* Center the form in the page */
+        width: 400px; /* Set form width */
+        font-family: Arial, sans-serif; /* Arial font */
+      }
 
-  }
+      /* Style for input fields and textarea */
+      #imageForm input[type="text"],
+      #imageForm input[type="url"],
+      #imageForm textarea {
+        width: 100%; /* Make fields take full width of the form */
+        padding: 10px; /* Add some padding inside */
+        border: 1px solid #ffc60a; /* Custom border color */
+        border-radius: 5px; /* Rounded corners */
+        margin-top: 10px; /* Add space above each field */
+        font-family: Arial, sans-serif; /* Arial font */
+      }
 
-  /* General style for input fields and textarea */
-  #imageForm input[type="text"],
-  #imageForm input[type="url"],
-  #imageForm textarea {
-    width: 100%;
-    padding: 10px;
-    border: 1px solid #ed2124; /* Custom border color */
-    border-radius: 5px;
-    font-family: Arial, sans-serif;
-    background-color: white;
-    max-width: 400px;
+      /* Style for the submit button */
+      #imageForm input[type="submit"] {
+        background-color: #ed2087; /* Custom background color */
+        color: white; /* White text */
+        padding: 10px 20px; /* Padding inside the button */
+        border: none; /* Remove border */
+        border-radius: 5px; /* Rounded corners */
+        cursor: pointer; /* Change cursor to pointer when hovering */
+        margin-top: 20px; /* Add space above the button */
+        font-family: Arial, sans-serif; /* Arial font */
+      }
 
-  }
+      /* Change background and text color of the submit button on hover */
+      #imageForm input[type="submit"]:hover {
+        background-color: #86c546; /* Darker shade for hover state */
+      }
 
-  /* Style for the submit button */
-  #imageForm input[type="submit"] {
-    background-color: #59caec; /* Pink background */
-    color: white;
-    padding: 10px 20px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    font-size: 16px;
-    border: 1px solid #ed2124;
+      /* Style for the success message container */
+      #successMessage {
+        text-align: center; /* Center-align the text */
+        margin-top: 20px; /* Add space above the message */
+        font-family: Arial, sans-serif; /* Arial font */
+      }
 
-  }
+      /* Style for the success message link */
+      #successMessage a {
+        color: #59caec; /* Match the header color or choose another */
+        text-decoration: none; /* Remove underline */
+      }
 
-  #imageForm input[type="submit"]:hover {
-    background-color: #86c546; /* Green background on hover */
-  }
-
-  /* Style for the success message container */
-  #successMessage {
-    text-align: center;
-    margin-top: 20px;
-    font-family: Arial, sans-serif;
-    background-color: #e8f0fe; /* Light blue background */
-    padding: 20px;
-    border-radius: 8px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    display: none; /* Hidden by default */
-  }
-
-  #successMessage a {
-    color: #59caec;
-    text-decoration: none;
-  }
-
-  #successMessage a:hover {
-    color: #ed2087;
-    text-decoration: underline;
-  }
-  .footer {
-    width: 100%;
-     /* Additional styling to ensure the footer looks good */
-     background-color: #ed2124; /* Example background color */
-     color: white; /* Example text color */
-     text-align: center;
-     padding: 20px 0; /* Example padding */
-     position: absolute;
-     bottom: 0;
-     left: 0;
-     line-height: 1.5
-
-
-  }
-  a {
-    color:white
-  }
-
+      /* Change color of the link on hover */
+      #successMessage a:hover {
+        color: #ed2087; /* Use a color that matches the submit button or choose another */;
+        text-decoration: underline;
+      }
   </style>
 
-  <form id="imageForm">
-      <h1>Image Submission Form</h1>
 
-      <input type="text" id="imageTitle" name="imageTitle" placeholder="Your Name">
+  <h1>Image Submission Form</h1>
+  <form id="imageForm">
+    <input type="text" id="imageTitle" name="imageTitle" placeholder="Your Name">
       <input type="url" id="imageUrl" name="imageUrl" placeholder="Enter Image URL">
       <textarea id="imageDescription" name="imageDescription" placeholder="Enter Image Description"></textarea>
-      <!-- Add file input here -->
-      <input type="file" id="imageFile" name="imageFile">
       <input type="submit" value="Submit Image">
   </form>
-
   <!-- Success Message Container -->
 <div id="successMessage" style="display:none;">
     <p>Your image has been successfully submitted. You can view and edit your submission on Are.na:</p>
@@ -138,53 +101,45 @@
 </div>
 
 
-  <div class="footer">2024 VCU Senior Show Image Submission Form's<br> Are.na page at: <a href="https://www.are.na/bree-d-5s66pyu4cqo/vcu-senior-show-2024">VCU Senior Show</a></div>
+<script>
+document.getElementById('imageForm').addEventListener('submit', async (e) => {
+  e.preventDefault();
 
+  // Initialize a new FormData object
+  const formData = new FormData(document.getElementById('imageForm'));
 
+  // Check if an image file was uploaded
+  const imageFile = document.getElementById('imageFile').files[0];
+  if (imageFile) {
+    // If an image file is uploaded, append it to formData
+    formData.append('imageFile', imageFile);
+  }
+  // No need to explicitly append the imageUrl, imageTitle, or imageDescription fields
+  // since they are automatically included in formData by constructing it with the form element
 
-
-  <script>
-    document.getElementById('imageForm').addEventListener('submit', async (e) => {
-      e.preventDefault();
-
-      // Gather form data
-      const imageTitle = document.getElementById('imageTitle').value;
-      const imageUrl = document.getElementById('imageUrl').value;
-      const imageDescription = document.getElementById('imageDescription').value;
-      const imageFile = document.getElementById('imageFile').files[0]; // Assuming you have an input field for file upload
-
-      // Prepare the form data
-      const formData = new FormData();
-      formData.append('imageTitle', imageTitle);
-      formData.append('imageUrl', imageUrl);
-      formData.append('imageDescription', imageDescription);
-      formData.append('imageFile', imageFile);
-
-      try {
-        // Perform the fetch request to the Netlify function
-        const response = await fetch('/.netlify/functions/submit-to-arena', {
-          method: 'POST',
-          body: formData
-        });
-
-        // Check if the submission was successful
-        if (response.ok) {
-          // Display the success message and link
-          document.getElementById('successMessage').style.display = 'block';
-          alert("Image submitted successfully. Check the Are.na channel for your submission.");
-        } else {
-          // Handle submission error
-          alert("Failed to submit image. Please try again.");
-        }
-      } catch (error) {
-        console.error('Error submitting image:', error);
-        alert("Failed to submit image. Please try again.");
-      }
+  // Perform the fetch request to the Netlify function
+  try {
+    const response = await fetch('/.netlify/functions/submit-to-arena', {
+      method: 'POST',
+      body: formData, // Sends the form data as multipart/form-data
     });
-  </script>
 
-
-
+    // Check if the submission was successful
+    if (response.ok) {
+      // Display the success message
+      document.getElementById('successMessage').style.display = 'block';
+      alert("Image submitted successfully. Check the Are.na channel for your submission.");
+    } else {
+      // Handle submission error
+      alert("Failed to submit image. Please try again.");
+    }
+  } catch (error) {
+    // If the fetch operation itself failed (e.g., network error)
+    console.error('Error submitting image:', error);
+    alert("Failed to submit image. Please try again.");
+  }
+});
+</script>
 
 </body>
 </html>

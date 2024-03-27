@@ -144,79 +144,46 @@
 
 
   <script>
-  document.getElementById('imageForm').addEventListener('submit', async (e) => {
-    e.preventDefault();
+    document.getElementById('imageForm').addEventListener('submit', async (e) => {
+      e.preventDefault();
 
-    // Gather form data
-    const imageTitle = document.getElementById('imageTitle').value;
-    const imageUrl = document.getElementById('imageUrl').value;
-    const imageDescription = document.getElementById('imageDescription').value;
+      // Gather form data
+      const imageTitle = document.getElementById('imageTitle').value;
+      const imageUrl = document.getElementById('imageUrl').value;
+      const imageDescription = document.getElementById('imageDescription').value;
+      const imageFile = document.getElementById('imageFile').files[0]; // Assuming you have an input field for file upload
 
-    // Prepare the request payload
-    const payload = JSON.stringify({ imageTitle, imageUrl, imageDescription });
+      // Prepare the form data
+      const formData = new FormData();
+      formData.append('imageTitle', imageTitle);
+      formData.append('imageUrl', imageUrl);
+      formData.append('imageDescription', imageDescription);
+      formData.append('imageFile', imageFile);
 
-    // Perform the fetch request
-    const response = await fetch('/.netlify/functions/submit-to-arena', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: payload
-    });
+      try {
+        // Perform the fetch request to the Netlify function
+        const response = await fetch('/.netlify/functions/submit-to-arena', {
+          method: 'POST',
+          body: formData
+        });
 
-    // Check if the submission was successful
-    if (response.ok) {
-        // Display the success message and link
-        document.getElementById('successMessage').style.display = 'block';
-        // Optionally, hide the form
-        // document.getElementById('imageForm').style.display = 'none';
-        alert("Image submitted successfully. Check the Are.na channel for your submission.");
-    } else {
-        // Handle submission error
+        // Check if the submission was successful
+        if (response.ok) {
+          // Display the success message and link
+          document.getElementById('successMessage').style.display = 'block';
+          alert("Image submitted successfully. Check the Are.na channel for your submission.");
+        } else {
+          // Handle submission error
+          alert("Failed to submit image. Please try again.");
+        }
+      } catch (error) {
+        console.error('Error submitting image:', error);
         alert("Failed to submit image. Please try again.");
-    }
-});
+      }
+    });
+  </script>
 
-</script>
 
-<script>
-const axios = require('axios');
-const FormData = require('form-data');
-
-exports.handler = async (event, context) => {
-    // Parse the incoming request body
-    const { imageTitle, imageUrl, imageDescription, imageFile } = JSON.parse(event.body);
-
-    // Prepare form data to send to Are.na (assuming you have the file in a suitable format)
-    let formData = new FormData();
-    formData.append('title', imageTitle);
-    formData.append('description', imageDescription);
-    formData.append('image', imageFile); // This would need adjustment based on how you handle files
-
-    // Configure the request to Are.na's API
-    const config = {
-        method: 'post',
-        url: 'https://dev.are.na/v2/channels/{channel_id}/blocks',
-        headers: {
-            'Authorization': `Bearer YOUR_ARE.NA_ACCESS_TOKEN`,
-            ...formData.getHeaders()
-        },
-        data: formData
-    };
-
-    try {
-        // Make the request to Are.na
-        const response = await axios(config);
-        return {
-            statusCode: 200,
-            body: JSON.stringify({ message: "Success", data: response.data })
-        };
-    } catch (error) {
-        return {
-            statusCode: 500,
-            body: JSON.stringify({ message: "Failed to upload", error: error.toString() })
-        };
-    }
-};
-</script>
 
 
 </body>

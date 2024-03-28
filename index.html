@@ -137,34 +137,32 @@
 </div>
 
 
-  <div class="footer">2024 VCU Senior Show Image Submission Form's<br> Are.na page at: <a href="https://www.are.na/bree-d-5s66pyu4cqo/vcu-senior-show-2024">VCU Senior Show</a></div>
-  <script>
-  document.getElementById('imageForm').addEventListener('submit', async (e) => {
-      e.preventDefault();
+<div class="footer">2024 VCU Senior Show Image Submission Form's<br> Are.na page at: <a href="https://www.are.na/bree-d-5s66pyu4cqo/vcu-senior-show-2024">VCU Senior Show</a></div>
+<script>
+document.getElementById('imageForm').addEventListener('submit', async (e) => {
+    e.preventDefault();
 
-      const formData = new FormData(document.getElementById('imageForm'));
-ormData.append('imageFile', imageFile);
-      }
+    const formData = new FormData(document.getElementById('imageForm'));
 
-      try {
-          const response = await fetch('/.netlify/functions/submit-to-arena', {
-              method: 'POST',
-              body: formData,
-          });
+    try {
+        const response = await fetch('/.netlify/functions/submit-to-arena', {
+            method: 'POST',
+            body: formData,
+        });
 
-          if (response.ok) {
-              // Make the success message visible upon successful submission
-              document.getElementById('successMessage').style.display = 'block';
-              alert("Submission successful. Check the Are.na channel for your submission.");
-          } else {
-              alert("Failed to submit. Please try again.");
-          }
-      } catch (error) {
-          console.error('Error submitting:', error);
-          alert("Failed to submit. Please try again.");
-      }
-  });
-  </script>
+        if (response.ok) {
+            document.getElementById('successMessage').style.display = 'block';
+            alert("Submission successful. Check the Are.na channel for your submission.");
+        } else {
+            alert("Failed to submit. Please try again.");
+        }
+    } catch (error) {
+        console.error('Error submitting:', error);
+        alert("Failed to submit. Please try again.");
+    }
+});
+</script>
+
 
 
 </body>

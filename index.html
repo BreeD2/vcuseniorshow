@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
 
     <title>VCU Senior Show Form</title>
-    <link rel="icon" type="image/x-icon" href="favicon.ico"/>
+
     <link rel="apple-touch-icon" sizes="76x76" href="favicon/apple-touch-icon.png">
   <link rel="icon" type="image/png" sizes="32x32" href="favicon/favicon-32x32.png">
   <link rel="icon" type="image/png" sizes="16x16" href="favicon/favicon-16x16.png">
@@ -21,11 +21,7 @@
     body {
       background-color: #c091ff;
       font-family: Arial, sans-serif;
-      margin: 0;
-      padding: 0;
-      display: flex;
-      flex-direction: column;
-      min-height: 100vh;
+
     }
 
     h1 {
@@ -43,13 +39,13 @@
       margin-top: 100px;
       padding: 20px;
       width: 90%;
-      max-width: 400px;
+      max-width: 450px;
       background-color: #ffc60a;
       border-radius: 8px;
       box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
       margin-left: auto;
       margin-right: auto;
-      height: 400px
+      height: 450px
     }
 
     #submissionForm input[type="text"],
@@ -108,7 +104,9 @@
       color: white;
       text-align: center;
       padding: 20px 0;
-      margin-top: 128px; /* Pushes the footer to the bottom */
+      position: absolute;
+      bottom:0px;
+    left:0px
     }
 
     a {
@@ -118,7 +116,7 @@
     /* Media query for smaller screens */
     @media (max-width: 600px) {
       h1 {
-        font-size: 20px;
+        font-size: 25px;
         margin-top: 20px;
         gap: 10px;
       }
@@ -126,8 +124,7 @@
       #submissionForm {
         margin-top: 100px;
         padding: 15px;
-
-
+        max-width: 300px;
         max-height: 400px
       }
 
@@ -135,18 +132,25 @@
         padding: 8px 16px;
         font-size: 14px;
         gap: 10px;
+        max-width: 280px;
       }
 
       #submissionForm input[type="text"]{
       max-height:800px;
       gap: 10px;
+      max-width: 280px;
 
+      }
+      #submissionForm input[type="text"],
+      #submissionForm input[type="url"],
+      #submissionForm textarea {
+      max-width: 280px;
       }
 
 
 
       .footer {
-      margin-top: 238px
+
       }
     }
   </style>

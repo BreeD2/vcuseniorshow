@@ -175,24 +175,28 @@
 <script>
 document.getElementById('imageForm').addEventListener('submit', async (e) => {
     e.preventDefault();
-    const imageUrl = document.getElementById('imageUrl').value;
-    const imageTitle = document.getElementById('yourName').value;
-    const imageDescription = document.getElementById('imageDescription').value;
+
+    // Create FormData object
+    const formData = new FormData();
+    formData.append('imageTitle', document.getElementById('yourName').value);
+    formData.append('imageDescription', document.getElementById('imageDescription').value);
+    formData.append('imageFile', document.getElementById('imageFile').files[0]); // Append file
 
     const response = await fetch('/.netlify/functions/submit-to-arena', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ imageUrl, imageTitle, imageDescription })
+        body: formData // Send formData object
     });
 
     if (response.ok) {
         document.getElementById('successMessage').style.display = 'block';
         alert("Image submitted successfully.");
     } else {
-        alert("Failed to submit image.");
+        const errorResponse = await response.json();
+        alert("Failed to submit image. " + errorResponse.message);
     }
 });
 </script>
+
 
 
 

@@ -81,13 +81,9 @@
   /* Style for the success message container */
   #successMessage {
     text-align: center;
-    margin-top: 20px;
-    font-family: Arial, sans-serif;
-    background-color: #e8f0fe; /* Light blue background */
-    padding: 20px;
-    border-radius: 8px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    display: none; /* Hidden by default */
+    max-width: 400px;
+      border: 1px solid #ed2124;
+      background-color:white
   }
 
   #successMessage a {
@@ -109,7 +105,8 @@
      position: absolute;
      bottom: 0;
      left: 0;
-     line-height: 1.5
+     line-height: 1.5;
+     margin-top: 100px
 
 
   }
@@ -122,18 +119,19 @@
 
   <form id="imageForm">
   <h1>Image Submission Form</h1>
-  <input type="text" id="imageTitle" name="imageTitle" placeholder="Enter Image Title">
+  <input type="text" id="yourName" name="yourName" placeholder="Enter Your Name">
   <textarea id="imageDescription" name="imageDescription" placeholder="Enter Image Description"></textarea>
   <input type="url" id="imageUrl" name="imageUrl" placeholder="Enter Image URL">
   <input type="submit" value="Submit Image">
+  <!-- Success Message Container -->
+  <div id="successMessage" style="display:none;">
+      <p>Your image has been successfully submitted. You can view and edit your submission on Are.na:</p>
+      <!-- Link to the Are.na channel -->
+      <a href="https://www.are.na/bree-d-5s66pyu4cqo/vcu-senior-show-2024" target="_blank">VCU Senior Show 2024 Channel</a>
 </form>
 
 
-<!-- Success Message Container -->
-<div id="successMessage" style="display:none;">
-    <p>Your image has been successfully submitted. You can view and edit your submission on Are.na:</p>
-    <!-- Link to the Are.na channel -->
-    <a href="https://www.are.na/bree-d-5s66pyu4cqo/vcu-senior-show-2024" target="_blank">VCU Senior Show 2024 Channel</a>
+
 </div>
 
 <div class="footer">2024 VCU Senior Show Image Submission Form's<br> Are.na page at: <a href="https://www.are.na/bree-d-5s66pyu4cqo/vcu-senior-show-2024">VCU Senior Show</a></div>
@@ -141,7 +139,7 @@
 document.getElementById('imageForm').addEventListener('submit', async (e) => {
     e.preventDefault();
     const imageUrl = document.getElementById('imageUrl').value;
-    const imageTitle = document.getElementById('imageTitle').value;
+    const imageTitle = document.getElementById('yourName').value;
     const imageDescription = document.getElementById('imageDescription').value;
 
     const response = await fetch('/.netlify/functions/submit-to-arena', {

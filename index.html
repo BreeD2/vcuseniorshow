@@ -148,38 +148,57 @@
   </style>
 
 
-  <script>
-    document.getElementById('submissionForm').addEventListener('submit', async (e) => {
-      e.preventDefault();
-      const yourName = document.getElementById('yourName').value;
-      const yourDescription = document.getElementById('yourDescription').value;
-      const yourLink = document.getElementById('yourLink').value;
 
-      const submission = { yourName, yourDescription, yourLink };
+  <form id="submissionForm">
+       <h1>Image Submission Form</h1>
+       <input type="text" id="yourName" name="yourName" placeholder="Enter Your Name" required>
+       <textarea id="yourDescription" name="yourDescription" placeholder="Enter Your Description" required></textarea>
+       <input type="url" id="yourLink" name="yourLink" placeholder="Enter Your Url" required>
+       <input type="submit" value="Submit Image">
 
-      try {
-        const response = await fetch('/.netlify/functions/submit-to-arena', {
-          method: 'POST',
-          headers: {'Content-Type': 'application/json'},
-          body: JSON.stringify(submission)
-        });
 
-        if (response.ok) {
-          alert('Your image has been successfully submitted. You can view and edit your submission on Are.na. Please check the message below for the link.');
-          document.getElementById('submissionForm').reset();
-          // Display success message with the link
-          document.getElementById('successMessage').innerHTML = 'Your image has been successfully submitted. You can view and edit your submission on Are.na: <a href="https://www.are.na/bree-d-5s66pyu4cqo/vcu-senior-show-2024" target="_blank">VCU Senior Show 2024 Channel</a>';
-          document.getElementById('successMessage').style.display = 'block';
-        } else {
-          const errorResponse = await response.json();
-          alert(`Failed to submit: ${errorResponse.message}. Please try again.`);
-        }
-      } catch (error) {
-        console.error('Submission error:', error);
-        alert('Failed to submit. Please try again.');
-      }
-    });
-  </script>
+   <!-- Success Message Container -->
+   <div id="successMessage" style="display:none;">
+       <p>Your image has been successfully submitted. You can view and edit your submission on Are.na:</p>
+       <a href="https://www.are.na/bree-d-5s66pyu4cqo/vcu-senior-show-2024" target="_blank">VCU Senior Show 2024 Channel</a>
+   </div>
+   </form>
+
+   <div class="footer">2024 VCU Senior Show Image Submission Form's<br> Are.na page at: <a href="https://www.are.na/bree-d-5s66pyu4cqo/vcu-senior-show-2024">VCU Senior Show</a></div>
+
+   <script>
+     document.getElementById('submissionForm').addEventListener('submit', async (e) => {
+       e.preventDefault();
+       const yourName = document.getElementById('yourName').value;
+       const yourDescription = document.getElementById('yourDescription').value;
+       const yourLink = document.getElementById('yourLink').value;
+
+       const submission = { yourName, yourDescription, yourLink };
+
+       try {
+         const response = await fetch('/.netlify/functions/submit-to-arena', {
+           method: 'POST',
+           headers: {'Content-Type': 'application/json'},
+           body: JSON.stringify(submission)
+         });
+
+         if (response.ok) {
+           alert('Your image has been successfully submitted. You can view and edit your submission on Are.na. Please check the message below for the link.');
+           document.getElementById('submissionForm').reset();
+           // Display success message with the link
+           document.getElementById('successMessage').innerHTML = 'Your image has been successfully submitted. You can view and edit your submission on Are.na: <a href="https://www.are.na/bree-d-5s66pyu4cqo/vcu-senior-show-2024" target="_blank">VCU Senior Show 2024 Channel</a>';
+           document.getElementById('successMessage').style.display = 'block';
+         } else {
+           const errorResponse = await response.json();
+           alert(`Failed to submit: ${errorResponse.message}. Please try again.`);
+         }
+       } catch (error) {
+         console.error('Submission error:', error);
+         alert('Failed to submit. Please try again.');
+       }
+     });
+   </script>
+
 
 
 

@@ -35,11 +35,11 @@
       margin-bottom: 20px;
     }
 
-    #imageForm {
+    #submissionForm {
       display: flex;
       flex-direction: column;
       align-items: center;
-      gap: 15px;
+      gap: 20px;
       margin-top: 100px;
       padding: 20px;
       width: 90%;
@@ -52,9 +52,9 @@
       height: 400px
     }
 
-    #imageForm input[type="text"],
-    #imageForm input[type="url"],
-    #imageForm textarea {
+    #submissionForm input[type="text"],
+    #submissionForm input[type="url"],
+    #submissionForm textarea {
       width: 100%;
             max-width: 400px;
       padding: 10px;
@@ -64,9 +64,9 @@
         font-family: Arial, sans-serif;
     }
 
-    #imageForm input[type="submit"] {
+    #submissionForm input[type="submit"] {
       background-color: #59caec;
-      color: white;
+      color: #ed2124;
       padding: 10px 20px;
       border: none;
       border-radius: 5px;
@@ -75,7 +75,7 @@
       border: 1px solid #ed2124;
     }
 
-    #imageForm input[type="submit"]:hover {
+    #submissionForm input[type="submit"]:hover {
       background-color: #86c546;
     }
 
@@ -116,23 +116,26 @@
       h1 {
         font-size: 20px;
         margin-top: 20px;
+        gap: 10px;
       }
 
-      #imageForm {
+      #submissionForm {
         margin-top: 100px;
         padding: 15px;
-        gap: 10px;
+
 
         max-height: 400px
       }
 
-      #imageForm input[type="submit"] {
+      #submissionForm input[type="submit"] {
         padding: 8px 16px;
         font-size: 14px;
+        gap: 10px;
       }
 
-      #imageForm input[type="text"]{
-      max-height:800px
+      #submissionForm input[type="text"]{
+      max-height:800px;
+      gap: 10px;
 
       }
 
@@ -146,16 +149,14 @@
 
 
 
-  <form id="imageForm" enctype="multipart/form-data">
+<form id="submissionForm">
     <h1>Image Submission Form</h1>
     <input type="text" id="yourName" name="yourName" placeholder="Enter Your Name">
-    <textarea id="imageDescription" name="imageDescription" placeholder="Enter Image Description"></textarea>
+    <textarea id="yourDescription" name="yourDescription" placeholder="Enter Image Description"></textarea>
 
     <!-- Option to enter image URL -->
-    <input type="url" id="imageUrl" name="imageUrl" placeholder="Enter Image URL">
+    <input type="url" id="link" name="link" placeholder="Enter Image URL">
 
-    <!-- Option to upload image file -->
-    <input type="file" id="imageFile" name="imageFile" accept="image/*">
 
     <input type="submit" value="Submit Image">
   </form>
@@ -173,28 +174,41 @@
 
 <div class="footer">2024 VCU Senior Show Image Submission Form's<br> Are.na page at: <a href="https://www.are.na/bree-d-5s66pyu4cqo/vcu-senior-show-2024">VCU Senior Show</a></div>
 <script>
-document.getElementById('imageForm').addEventListener('submit', async (e) => {
-    e.preventDefault();
+document.getElementById('submissionForm').addEventListener('submit', async (e) => {
+  e.preventDefault();
 
-    // Create FormData object
-    const formData = new FormData();
-    formData.append('imageTitle', document.getElementById('yourName').value);
-    formData.append('imageDescription', document.getElementById('imageDescription').value);
-    formData.append('imageFile', document.getElementById('imageFile').files[0]); // Append file
+  const yourName = document.getElementById('yourName').value;
+  const yourDescription = document.getElementById('yourDescription').value;
+  const imageUrl = document.getElementById('link').value;
 
+  // Construct the submission object
+  const submission = {
+    yourName,
+    yourDescription,
+    imageUrl
+  };
+
+  try {
     const response = await fetch('/.netlify/functions/submit-to-arena', {
-        method: 'POST',
-        body: formData // Send formData object
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify(submission)
     });
 
     if (response.ok) {
-        document.getElementById('successMessage').style.display = 'block';
-        alert("Image submitted successfully.");
+      alert('Submission successful!');
+      // Optionally, clear the form or redirect the user
     } else {
-        const errorResponse = await response.json();
-        alert("Failed to submit image. " + errorResponse.message);
+      const errorResponse = await response.json();
+      alert('Failed to submit. ' + errorResponse.message);
     }
+  } catch (error) {
+    console.error('Submission error:', error);
+    alert('Failed to submit. Please try again.');
+  }
 });
+</script>
+
 </script>
 
 

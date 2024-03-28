@@ -5,7 +5,7 @@ exports.handler = async (event) => {
         return { statusCode: 405, body: JSON.stringify({ message: 'Method Not Allowed' }) };
     }
 
-    const { yourName, yourDescription, yourlink } = JSON.parse(event.body);
+    const { yourName, yourDescription, yourLink } = JSON.parse(event.body); // Corrected to use 'yourLink'
 
     const token = process.env.ARENA_ACCESS_TOKEN;
     if (!token) {
@@ -20,7 +20,7 @@ exports.handler = async (event) => {
         };
 
         const response = await axios.post(`https://api.are.na/v2/channels/vcu-senior-show-2024/blocks`, {
-            source: yourLink,
+            source: yourLink, // Correctly using 'yourLink' here
             description: `${yourName}: ${yourDescription}`
         }, { headers });
 

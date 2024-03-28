@@ -194,7 +194,7 @@
            alert('Your image has been successfully submitted. You can view and edit your submission on Are.na. Please check the message below for the link.');
            document.getElementById('submissionForm').reset();
            // Display success message with the link
-           document.getElementById('successMessage').innerHTML = 'Your image has been successfully submitted. You can view and edit your submission on Are.na: <a href="https://www.are.na/bree-d-5s66pyu4cqo/vcu-senior-show-2024" target="_blank">VCU Senior Show 2024 Channel</a>';
+           document.getElementById('successMessage').innerHTML = 'Your image has been successfully submitted. You can view and edit your submission on Are.na: <br><a href="https://www.are.na/bree-d-5s66pyu4cqo/vcu-senior-show-2024" target="_blank">VCU Senior Show 2024 Channel</a>';
            document.getElementById('successMessage').style.display = 'block';
          } else {
            const errorResponse = await response.json();

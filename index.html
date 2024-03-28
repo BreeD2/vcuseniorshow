@@ -141,20 +141,30 @@
   <script>
   document.getElementById('imageForm').addEventListener('submit', async (e) => {
       e.preventDefault();
-      const imageUrl = document.getElementById('imageUrl').value;
-      const imageTitle = document.getElementById('imageTitle').value;
-      const imageDescription = document.getElementById('imageDescription').value;
 
-      const response = await fetch('/.netlify/functions/submit-to-arena', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ imageUrl, imageTitle, imageDescription })
-      });
+      const formData = new FormData(document.getElementById('imageForm'));
 
-      if (response.ok) {
-          alert("Image submitted successfully.");
-      } else {
-          alert("Failed to submit image.");
+      const imageFile = document.getElementById('imageFile').files[0];
+      if (imageFile) {
+          formData.append('imageFile', imageFile);
+      }
+
+      try {
+          const response = await fetch('/.netlify/functions/submit-to-arena', {
+              method: 'POST',
+              body: formData,
+          });
+
+          if (response.ok) {
+              // Make the success message visible upon successful submission
+              document.getElementById('successMessage').style.display = 'block';
+              alert("Submission successful. Check the Are.na channel for your submission.");
+          } else {
+              alert("Failed to submit. Please try again.");
+          }
+      } catch (error) {
+          console.error('Error submitting:', error);
+          alert("Failed to submit. Please try again.");
       }
   });
   </script>

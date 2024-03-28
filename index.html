@@ -117,12 +117,20 @@
   </style>
 
 
-  <form id="imageForm">
-  <h1>Image Submission Form</h1>
-  <input type="text" id="yourName" name="yourName" placeholder="Enter Your Name">
-  <textarea id="imageDescription" name="imageDescription" placeholder="Enter Image Description"></textarea>
-  <input type="url" id="imageUrl" name="imageUrl" placeholder="Enter Image URL">
-  <input type="submit" value="Submit Image">
+  <form id="imageForm" enctype="multipart/form-data">
+    <h1>Image Submission Form</h1>
+    <input type="text" id="yourName" name="yourName" placeholder="Enter Your Name">
+    <textarea id="imageDescription" name="imageDescription" placeholder="Enter Image Description"></textarea>
+
+    <!-- Option to enter image URL -->
+    <input type="url" id="imageUrl" name="imageUrl" placeholder="Enter Image URL">
+
+    <!-- Option to upload image file -->
+    <input type="file" id="imageFile" name="imageFile" accept="image/*">
+
+    <input type="submit" value="Submit Image">
+  </form>
+
   <!-- Success Message Container -->
   <div id="successMessage" style="display:none;">
       <p>Your image has been successfully submitted. You can view and edit your submission on Are.na:</p>

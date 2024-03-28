@@ -12,7 +12,8 @@
     "aws-sdk": "^2.1583.0",
     "axios": "^1.6.8",
     "cloudinary": "^2.0.3",
-    "formidable": "^3.5.1"
+    "formidable": "^3.5.1",
+    "formidable-serverless": "^1.1.1"
   },
   "description": ""
 }

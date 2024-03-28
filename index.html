@@ -153,9 +153,7 @@
       <h1>Image Submission Form</h1>
       <input type="text" id="yourName" name="yourName" placeholder="Enter Your Name" required>
       <textarea id="yourDescription" name="yourDescription" placeholder="Enter Your Description" required></textarea>
-
-      <!-- Option to enter image URL -->
-      <input type="url" id="yourlink" name="yourlink" placeholder="Enter Your Url" required>
+      <input type="url" id="yourLink" name="yourLink" placeholder="Enter Your Url" required>
 
       <input type="submit" value="Submit Image">
 
@@ -175,9 +173,9 @@
       e.preventDefault();
       const yourName = document.getElementById('yourName').value;
       const yourDescription = document.getElementById('yourDescription').value;
-      const yourlink = document.getElementById('yourlink').value;
+      const yourLink = document.getElementById('yourLink').value;
 
-      const submission = { yourName, yourDescription, yourlink };
+      const submission = { yourName, yourDescription, yourLink };
 
       try {
           const response = await fetch('/.netlify/functions/submit-to-arena', {

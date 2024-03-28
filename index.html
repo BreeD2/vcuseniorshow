@@ -158,7 +158,7 @@
       <input type="url" id="yourlink" name="yourlink" placeholder="Enter Your Url" required>
 
       <input type="submit" value="Submit Image">
-  </form>
+
 
   <!-- Success Message Container -->
   <div id="successMessage" style="display:none;">
@@ -166,52 +166,39 @@
       <!-- Link to the Are.na channel -->
       <a href="https://www.are.na/bree-d-5s66pyu4cqo/vcu-senior-show-2024" target="_blank">VCU Senior Show 2024 Channel</a>
   </div>
+    </form>
 
   <div class="footer">2024 VCU Senior Show Image Submission Form's<br> Are.na page at: <a href="https://www.are.na/bree-d-5s66pyu4cqo/vcu-senior-show-2024">VCU Senior Show</a></div>
 
   <script>
   document.getElementById('submissionForm').addEventListener('submit', async (e) => {
       e.preventDefault();
-
       const yourName = document.getElementById('yourName').value;
       const yourDescription = document.getElementById('yourDescription').value;
       const yourlink = document.getElementById('yourlink').value;
 
-      // Construct the submission object
-      const submission = {
-        yourName,
-        yourDescription,
-        yourlink
-      };
+      const submission = { yourName, yourDescription, yourlink };
 
       try {
-        const response = await fetch('/.netlify/functions/submit-to-arena', {
-          method: 'POST',
-          headers: {'Content-Type': 'application/json'},
-          body: JSON.stringify(submission)
-        });
+          const response = await fetch('/.netlify/functions/submit-to-arena', {
+              method: 'POST',
+              headers: {'Content-Type': 'application/json'},
+              body: JSON.stringify(submission)
+          });
 
-        const messageDiv = document.getElementById('successMessage'); // Re-use this div for any message
-
-        if (response.ok) {
-          messageDiv.innerHTML = '<p>Your image has been successfully submitted. You can view and edit your submission on Are.na:</p><a href="https://www.are.na/bree-d-5s66pyu4cqo/vcu-senior-show-2024" target="_blank">VCU Senior Show 2024 Channel</a>'; // Success message
-          messageDiv.style.display = 'block';
-          document.getElementById('submissionForm').reset(); // Clear the form
-        } else {
-          const errorResponse = await response.json();
-          // Display failure message within the same div
-          messageDiv.innerHTML = `<p>Failed to submit: ${errorResponse.message}. Please try again.</p>`;
-          messageDiv.style.display = 'block';
-        }
+          if (response.ok) {
+              document.getElementById('submissionForm').reset();
+              document.getElementById('successMessage').style.display = 'block';
+          } else {
+              const errorResponse = await response.json();
+              alert(`Failed to submit: ${errorResponse.message}. Please try again.`);
+          }
       } catch (error) {
-        console.error('Submission error:', error);
-        // Display error message within the same div for fetch errors
-        document.getElementById('successMessage').innerHTML = '<p>Failed to submit. Please try again.</p>';
-        document.getElementById('successMessage').style.display = 'block';
+          console.error('Submission error:', error);
+          alert('Failed to submit. Please try again.');
       }
   });
   </script>
-
 
 
 

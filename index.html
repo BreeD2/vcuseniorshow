@@ -149,16 +149,15 @@
 
 
 
-<form id="submissionForm">
-    <h1>Image Submission Form</h1>
-    <input type="text" id="yourName" name="yourName" placeholder="Enter Your Name">
-    <textarea id="yourDescription" name="yourDescription" placeholder="Enter Image Description"></textarea>
+  <form id="submissionForm">
+      <h1>Image Submission Form</h1>
+      <input type="text" id="yourName" name="yourName" placeholder="Enter Your Name" required>
+      <textarea id="yourDescription" name="yourDescription" placeholder="Enter Image Description" required></textarea>
 
-    <!-- Option to enter image URL -->
-    <input type="url" id="link" name="link" placeholder="Enter Image URL">
+      <!-- Option to enter image URL -->
+      <input type="url" id="link" name="link" placeholder="Enter Image URL" required>
 
-
-    <input type="submit" value="Submit Image">
+      <input type="submit" value="Submit Image">
   </form>
 
   <!-- Success Message Container -->
@@ -166,50 +165,46 @@
       <p>Your image has been successfully submitted. You can view and edit your submission on Are.na:</p>
       <!-- Link to the Are.na channel -->
       <a href="https://www.are.na/bree-d-5s66pyu4cqo/vcu-senior-show-2024" target="_blank">VCU Senior Show 2024 Channel</a>
-</form>
+  </div>
 
+  <div class="footer">2024 VCU Senior Show Image Submission Form's<br> Are.na page at: <a href="https://www.are.na/bree-d-5s66pyu4cqo/vcu-senior-show-2024">VCU Senior Show</a></div>
 
+  <script>
+  document.getElementById('submissionForm').addEventListener('submit', async (e) => {
+    e.preventDefault();
 
-</div>
+    const yourName = document.getElementById('yourName').value;
+    const yourDescription = document.getElementById('yourDescription').value;
+    const link = document.getElementById('link').value;
 
-<div class="footer">2024 VCU Senior Show Image Submission Form's<br> Are.na page at: <a href="https://www.are.na/bree-d-5s66pyu4cqo/vcu-senior-show-2024">VCU Senior Show</a></div>
-<script>
-document.getElementById('submissionForm').addEventListener('submit', async (e) => {
-  e.preventDefault();
+    // Construct the submission object
+    const submission = {
+      yourName,
+      yourDescription,
+      link // Changed from Url to link
+    };
 
-  const yourName = document.getElementById('yourName').value;
-  const yourDescription = document.getElementById('yourDescription').value;
-  const imageUrl = document.getElementById('link').value;
+    try {
+      const response = await fetch('/.netlify/functions/submit-to-arena', {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify(submission)
+      });
 
-  // Construct the submission object
-  const submission = {
-    yourName,
-    yourDescription,
-    imageUrl
-  };
-
-  try {
-    const response = await fetch('/.netlify/functions/submit-to-arena', {
-      method: 'POST',
-      headers: {'Content-Type': 'application/json'},
-      body: JSON.stringify(submission)
-    });
-
-    if (response.ok) {
-      alert('Submission successful!');
-      // Optionally, clear the form or redirect the user
-    } else {
-      const errorResponse = await response.json();
-      alert('Failed to submit. ' + errorResponse.message);
+      if (response.ok) {
+        document.getElementById('submissionForm').reset(); // Optional: Clear the form
+        document.getElementById('successMessage').style.display = 'block'; // Display the success message
+      } else {
+        const errorResponse = await response.json();
+        alert('Failed to submit. ' + errorResponse.message);
+      }
+    } catch (error) {
+      console.error('Submission error:', error);
+      alert('Failed to submit. Please try again.');
     }
-  } catch (error) {
-    console.error('Submission error:', error);
-    alert('Failed to submit. Please try again.');
-  }
-});
-</script>
+  });
+  </script>
 
-</script>
 
 
 

@@ -129,35 +129,36 @@
 </form>
 
 
-  <!-- Success Message Container -->
+<!-- Success Message Container -->
 <div id="successMessage" style="display:none;">
     <p>Your image has been successfully submitted. You can view and edit your submission on Are.na:</p>
     <!-- Link to the Are.na channel -->
     <a href="https://www.are.na/bree-d-5s66pyu4cqo/vcu-senior-show-2024" target="_blank">VCU Senior Show 2024 Channel</a>
 </div>
 
+<div class="footer">2024 VCU Senior Show Image Submission Form's<br> Are.na page at: <a href="https://www.are.na/bree-d-5s66pyu4cqo/vcu-senior-show-2024">VCU Senior Show</a></div>
+<script>
+document.getElementById('imageForm').addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const imageUrl = document.getElementById('imageUrl').value;
+    const imageTitle = document.getElementById('imageTitle').value;
+    const imageDescription = document.getElementById('imageDescription').value;
 
-  <div class="footer">2024 VCU Senior Show Image Submission Form's<br> Are.na page at: <a href="https://www.are.na/bree-d-5s66pyu4cqo/vcu-senior-show-2024">VCU Senior Show</a></div>
-  <script>
-  document.getElementById('imageForm').addEventListener('submit', async (e) => {
-      e.preventDefault();
-      const imageUrl = document.getElementById('imageUrl').value;
-      const imageTitle = document.getElementById('imageTitle').value;
-      const imageDescription = document.getElementById('imageDescription').value;
+    const response = await fetch('/.netlify/functions/submit-to-arena', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ imageUrl, imageTitle, imageDescription })
+    });
 
-      const response = await fetch('/.netlify/functions/submit-to-arena', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ imageUrl, imageTitle, imageDescription })
-      });
+    if (response.ok) {
+        document.getElementById('successMessage').style.display = 'block';
+        alert("Image submitted successfully.");
+    } else {
+        alert("Failed to submit image.");
+    }
+});
+</script>
 
-      if (response.ok) {
-          alert("Image submitted successfully.");
-      } else {
-          alert("Failed to submit image.");
-      }
-  });
-  </script>
 
 
 </body>

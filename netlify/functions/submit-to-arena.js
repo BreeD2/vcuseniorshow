@@ -13,18 +13,20 @@ exports.handler = async (event) => {
     return { statusCode: 405, body: 'Method Not Allowed' };
   }
 
-  const body = JSON.parse(event.body);
-  const { imageTitle, imageDescription, imageFile, imageUrl } = body;
-  let uploadImageUrl = imageUrl; // Default to direct imageUrl if provided
+  let imageUrl, imageTitle, imageDescription;
 
-  if (imageFile) {
+  // Handle JSON body for URL submissions or base64 encoded image for file uploads
+  const body = JSON.parse(event.body);
+  imageTitle = body.imageTitle;
+  imageDescription = body.imageDescription;
+
+  if (body.imageFile) {
     // Assume imageFile is a base64-encoded string
     try {
-      const uploadResponse = await cloudinary.uploader.upload(imageFile, {
-        folder: "your_folder_name", // Specify a folder in Cloudinary
-        public_id: imageTitle.replace(/\s+/g, '_').toLowerCase() // Optional: specify a public ID
+      const uploadResponse = await cloudinary.uploader.upload(`data:image/jpeg;base64,${body.imageFile}`, {
+        folder: "your_folder_name" // Optional: specify a folder in Cloudinary
       });
-      uploadImageUrl = uploadResponse.secure_url; // Use the URL provided by Cloudinary
+      imageUrl = uploadResponse.secure_url; // Use the URL provided by Cloudinary
     } catch (uploadError) {
       console.error('Cloudinary upload failed:', uploadError);
       return {
@@ -32,9 +34,15 @@ exports.handler = async (event) => {
         body: JSON.stringify({ message: "Failed to upload image to Cloudinary." })
       };
     }
+  } else if (body.imageUrl) {
+    imageUrl = body.imageUrl;
+  } else {
+    return {
+      statusCode: 400,
+      body: JSON.stringify({ message: "No image URL or file provided." })
+    };
   }
 
-  // Add your ARENA_ACCESS_TOKEN to your Netlify environment variables
   const token = process.env.ARENA_ACCESS_TOKEN;
   if (!token) {
     console.error('ARENA_ACCESS_TOKEN is not defined.');
@@ -50,7 +58,7 @@ exports.handler = async (event) => {
       'Content-Type': 'application/json'
     };
     const response = await axios.post(`https://api.are.na/v2/channels/vcu-senior-show-2024/blocks`, {
-      source: uploadImageUrl,
+      source: imageUrl,
       description: `${imageTitle}\n\n${imageDescription}`
     }, { headers });
 

@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
     <title>VCU Senior Show Form</title>
     <link rel="icon" type="image/x-icon" href="favicon.ico"/>
     <link rel="apple-touch-icon" sizes="76x76" href="favicon/apple-touch-icon.png">
@@ -12,109 +12,138 @@
   <link rel="mask-icon" href="favicon/safari-pinned-tab.svg" color="#5bbad5">
   <meta name="msapplication-TileColor" content="#da532c">
   <meta name="theme-color" content="#ffffff">
+   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <center>
 
 </head>
 <body>
   <style>
-  body {
-    background-color: #c091ff;
-    font-family: Arial, sans-serif;
-  }
-  /* Style for the header */
-  h1 {
-    color: #ed2087; /* Light blue color */
-    font-family: Arial, sans-serif;
-    text-align: center;
-    margin-top: 40px;
-    margin-bottom: 20px;
-  }
+    body {
+      background-color: #c091ff;
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+    }
 
-  /* Style for the form */
-  #imageForm {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 15px;
-    margin-top: 180px;
-    padding: 20px;
-    width: 100%;
-    max-width: 400px; /* Adjust based on preference */
-    font-family: Arial, sans-serif;
-    background-color: #ffc60a;
-    border-radius: 8px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    h1 {
+      color: #ed2087;
+      text-align: center;
+      margin-top: 40px;
+      margin-bottom: 20px;
+    }
 
-  }
+    #imageForm {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 15px;
+      margin-top: 100px;
+      padding: 20px;
+      width: 90%;
+      max-width: 400px;
+      background-color: #ffc60a;
+      border-radius: 8px;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      margin-left: auto;
+      margin-right: auto;
+      height: 400px
+    }
 
-  /* General style for input fields and textarea */
-  #imageForm input[type="text"],
-  #imageForm input[type="url"],
-  #imageForm textarea {
-    width: 100%;
-    padding: 10px;
-    border: 1px solid #ed2124; /* Custom border color */
-    border-radius: 5px;
-    font-family: Arial, sans-serif;
-    background-color: white;
-    max-width: 400px;
-
-  }
-
-  /* Style for the submit button */
-  #imageForm input[type="submit"] {
-    background-color: #59caec; /* Pink background */
-    color: white;
-    padding: 10px 20px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    font-size: 16px;
-    border: 1px solid #ed2124;
-
-  }
-
-  #imageForm input[type="submit"]:hover {
-    background-color: #86c546; /* Green background on hover */
-  }
-
-  /* Style for the success message container */
-  #successMessage {
-    text-align: center;
-    max-width: 400px;
+    #imageForm input[type="text"],
+    #imageForm input[type="url"],
+    #imageForm textarea {
+      width: 100%;
+            max-width: 400px;
+      padding: 10px;
       border: 1px solid #ed2124;
-      background-color:white
-  }
+      border-radius: 5px;
+      background-color: white;
+        font-family: Arial, sans-serif;
+    }
 
-  #successMessage a {
-    color: #59caec;
-    text-decoration: none;
-  }
+    #imageForm input[type="submit"] {
+      background-color: #59caec;
+      color: white;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 16px;
+      border: 1px solid #ed2124;
+    }
 
-  #successMessage a:hover {
-    color: #ed2087;
-    text-decoration: underline;
-  }
-  .footer {
-    width: 100%;
-     /* Additional styling to ensure the footer looks good */
-     background-color: #ed2124; /* Example background color */
-     color: white; /* Example text color */
-     text-align: center;
-     padding: 20px 0; /* Example padding */
-     position: absolute;
-     bottom: 0;
-     left: 0;
-     line-height: 1.5;
-     margin-top: 100px
+    #imageForm input[type="submit"]:hover {
+      background-color: #86c546;
+    }
+
+    #successMessage {
+      text-align: center;
+      max-width: 400px;
+      border: 1px solid #ed2124;
+      background-color: white;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    #successMessage a {
+      color: #59caec;
+      text-decoration: none;
+    }
+
+    #successMessage a:hover {
+      color: #ed2087;
+      text-decoration: underline;
+    }
+
+    .footer {
+      width: 100%;
+      background-color: #ed2124;
+      color: white;
+      text-align: center;
+      padding: 20px 0;
+      margin-top: 128px; /* Pushes the footer to the bottom */
+    }
+
+    a {
+      color: white;
+    }
+
+    /* Media query for smaller screens */
+    @media (max-width: 600px) {
+      h1 {
+        font-size: 20px;
+        margin-top: 20px;
+      }
+
+      #imageForm {
+        margin-top: 100px;
+        padding: 15px;
+        gap: 10px;
+
+        max-height: 400px
+      }
+
+      #imageForm input[type="submit"] {
+        padding: 8px 16px;
+        font-size: 14px;
+      }
+
+      #imageForm input[type="text"]{
+      max-height:800px
+
+      }
 
 
-  }
-  a {
-    color:white
-  }
 
+      .footer {
+      margin-top: 238px
+      }
+    }
   </style>
+
 
 
   <form id="imageForm" enctype="multipart/form-data">

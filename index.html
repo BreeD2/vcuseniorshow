@@ -153,47 +153,35 @@
     </div>
 
     <script>
-document.getElementById('submissionForm').addEventListener('submit', async (event) => {
-    event.preventDefault(); // Prevent the default form submission behavior
+        document.getElementById('submissionForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const yourName = document.getElementById('yourName').value;
+            const title = document.getElementById('title').value;
+            const yourDescription = document.getElementById('yourDescription').value;
+            const yourLink = document.getElementById('yourLink').value;
 
-    // Collect the form data
-    const channelId = document.getElementById('channelId').value;
-    const yourName = document.getElementById('yourName').value;
-    const title = document.getElementById('title').value;
-    const yourDescription = document.getElementById('yourDescription').value;
-    const yourLink = document.getElementById('yourLink').value;
+            const submission = { yourName, title, yourDescription, yourLink };
 
-    // Prepare the data to be sent in the request
-    const submissionData = {
-        yourName,
-        title,
-        yourDescription,
-        yourLink
-    };
+            try {
+                const response = await fetch('/.netlify/functions/submit-to-arena', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(submission)
+                });
 
-    // Define the API endpoint with the channel ID
-    const endpoint = `https://your-server-function-url/${channelId}`;
-
-    try {
-        // Send the submission data to your server function, which will handle the Are.na API call
-        const response = await fetch(endpoint, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(submissionData)
+                if (response.ok) {
+                    alert('Your image has been successfully submitted. You can view and edit your submission on Are.na. Please check the message below for the link.');
+                    document.getElementById('submissionForm').reset();
+                    document.getElementById('successMessage').style.display = 'block';
+                } else {
+                    const errorResponse = await response.json();
+                    alert(`Failed to submit: ${errorResponse.message}. Please try again.`);
+                }
+            } catch (error) {
+                console.error('Submission error:', error);
+                alert('Failed to submit. Please try again.');
+            }
         });
-
-        if (!response.ok) {
-            throw new Error('Network response was not ok');
-        }
-
-        // Handle success, such as displaying a success message
-        alert('Content successfully submitted to Are.na channel!');
-    } catch (error) {
-        console.error('Error submitting content:', error);
-        alert('Failed to submit content. Please try again.');
-    }
-});
-</script>
-
+    </script>
 </body>
 </html>

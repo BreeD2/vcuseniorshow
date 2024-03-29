@@ -153,46 +153,46 @@
     </div>
 
     <script>
-    document.getElementById('submissionForm').addEventListener('submit', async (event) => {
-        event.preventDefault(); // Prevent the default form submission behavior
+document.getElementById('submissionForm').addEventListener('submit', async (event) => {
+    event.preventDefault(); // Prevent the default form submission behavior
 
-        const yourName = document.getElementById('yourName').value;
-        const title = document.getElementById('title').value;
-        const yourDescription = document.getElementById('yourDescription').value;
-        const yourLink = document.getElementById('yourLink').value;
+    // Collect the form data
+    const channelId = document.getElementById('channelId').value;
+    const yourName = document.getElementById('yourName').value;
+    const title = document.getElementById('title').value;
+    const yourDescription = document.getElementById('yourDescription').value;
+    const yourLink = document.getElementById('yourLink').value;
 
-        // This endpoint should be your server-side function URL
-        // The server-side function is responsible for making the POST request to Are.na
-        const endpoint = `https://vcuseniorshow.netlify.app/`;
+    // Prepare the data to be sent in the request
+    const submissionData = {
+        yourName,
+        title,
+        yourDescription,
+        yourLink
+    };
 
-        // Prepare the data to be sent to your server function
-        const submissionData = {
-            channelId: 'bree-d-5s66pyu4cqo', // The channel slug for "vcu-senior-show-2024"
-            yourName,
-            title,
-            yourDescription,
-            yourLink
-        };
+    // Define the API endpoint with the channel ID
+    const endpoint = `https://your-server-function-url/${channelId}`;
 
-        try {
-            // Send the submission data to your server function
-            const response = await fetch(endpoint, {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(submissionData)
-            });
+    try {
+        // Send the submission data to your server function, which will handle the Are.na API call
+        const response = await fetch(endpoint, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(submissionData)
+        });
 
-            if (!response.ok) {
-                throw new Error('Network response was not ok');
-            }
-
-            alert('Content successfully submitted to Are.na channel!');
-        } catch (error) {
-            console.error('Error submitting content:', error);
-            alert('Failed to submit content. Please try again.');
+        if (!response.ok) {
+            throw new Error('Network response was not ok');
         }
-    });
 
+        // Handle success, such as displaying a success message
+        alert('Content successfully submitted to Are.na channel!');
+    } catch (error) {
+        console.error('Error submitting content:', error);
+        alert('Failed to submit content. Please try again.');
+    }
+});
 </script>
 
 </body>

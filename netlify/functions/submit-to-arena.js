@@ -5,7 +5,8 @@ exports.handler = async (event) => {
         return { statusCode: 405, body: JSON.stringify({ message: 'Method Not Allowed' }) };
     }
 
-    const { yourName, yourDescription, yourLink } = JSON.parse(event.body);
+    // Destructure yourTitle from the parsed JSON body along with other fields
+    const { yourName, title, yourDescription, yourLink } = JSON.parse(event.body);
 
     const token = process.env.ARENA_ACCESS_TOKEN;
     if (!token) {
@@ -19,12 +20,12 @@ exports.handler = async (event) => {
             'Content-Type': 'application/json'
         };
 
-        // Formatting the description to have the name and description on separate lines using markdown for better readability.
-        const formattedDescription = `**Name:** ${yourName}\n\n**Description:** ${yourDescription}`;
+        // Formatting the description to include name, title, and description on separate lines using markdown for better readability.
+        const formattedDescription = `**Name:** ${yourName}\n\n**Title:** ${title}\n\n**Description:** ${yourDescription}`;
 
         const response = await axios.post(`https://api.are.na/v2/channels/vcu-senior-show-2024/blocks`, {
             source: yourLink,
-            description: formattedDescription // Using the formatted description
+            description: formattedDescription // Using the formatted description that now includes the title
         }, { headers });
 
         return { statusCode: 200, body: JSON.stringify({ message: 'Submission successful.', response: response.data }) };

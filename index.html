@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
 
     <title>VCU Senior Show Form</title>
-
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="apple-touch-icon" sizes="76x76" href="favicon/apple-touch-icon.png">
   <link rel="icon" type="image/png" sizes="32x32" href="favicon/favicon-32x32.png">
   <link rel="icon" type="image/png" sizes="16x16" href="favicon/favicon-16x16.png">
@@ -36,7 +36,7 @@
       flex-direction: column;
       align-items: center;
       gap: 20px;
-      margin-top: 100px;
+      margin-top: 90px;
       padding: 20px;
       width: 90%;
       max-width: 450px;
@@ -146,23 +146,38 @@
       #submissionForm textarea {
       max-width: 280px;
       }
+    }
+
+      /* Media query for horizontal phones */
+ @media (min-width: 200px) and (max-width:600px)(orientation: landscape) {
+  .footer {
 
 
-
-      .footer {
-
+        bottom:-350px
       }
     }
+    /* Media query for devices with a min width of 600px and in portrait orientation */
+    @media (min-width: 300px) and (orientation: portrait) {
+      .footer {
+        bottom: 0px; /* Adjust as necessary, this pushes the footer 100px above the bottom edge */;
+      }
+    }
+
+
+
   </style>
 
 
 
   <form id="submissionForm">
-       <h1>Image Submission Form</h1>
-       <input type="text" id="yourName" name="yourName" placeholder="Enter Your Name" required>
-       <textarea id="yourDescription" name="yourDescription" placeholder="Enter Your Description" required></textarea>
-       <input type="url" id="yourLink" name="yourLink" placeholder="Enter Your Url" required>
-       <input type="submit" value="Submit Image">
+      <h1>Image Submission Form</h1>
+      <input type="text" id="yourName" name="yourName" placeholder="Enter Your Name" required>
+      <!-- Title input field added below -->
+      <input type="text" id="title" name="title" placeholder="Enter Your Title" required>
+      <textarea id="yourDescription" name="yourDescription" placeholder="Enter Your Description" required></textarea>
+      <input type="url" id="yourLink" name="yourLink" placeholder="Enter Your Url" required>
+      <input type="submit" value="Submit Image">
+  </form>
 
 
    <!-- Success Message Container -->
@@ -175,36 +190,36 @@
    <div class="footer">2024 VCU Senior Show Image Submission Form's<br> Are.na page at: <a href="https://www.are.na/bree-d-5s66pyu4cqo/vcu-senior-show-2024">VCU Senior Show</a></div>
 
    <script>
-     document.getElementById('submissionForm').addEventListener('submit', async (e) => {
-       e.preventDefault();
-       const yourName = document.getElementById('yourName').value;
-       const yourDescription = document.getElementById('yourDescription').value;
-       const yourLink = document.getElementById('yourLink').value;
+       document.getElementById('submissionForm').addEventListener('submit', async (e) => {
+           e.preventDefault();
+           const yourName = document.getElementById('yourName').value;
+           const title = document.getElementById('title').value; // Retrieve the title value
+           const yourDescription = document.getElementById('yourDescription').value;
+           const yourLink = document.getElementById('yourLink').value;
 
-       const submission = { yourName, yourDescription, yourLink };
+           const submission = { yourName, title, yourDescription, yourLink }; // Include the title in the submission
 
-       try {
-         const response = await fetch('/.netlify/functions/submit-to-arena', {
-           method: 'POST',
-           headers: {'Content-Type': 'application/json'},
-           body: JSON.stringify(submission)
-         });
+           try {
+               const response = await fetch('/.netlify/functions/submit-to-arena', {
+                   method: 'POST',
+                   headers: {'Content-Type': 'application/json'},
+                   body: JSON.stringify(submission)
+               });
 
-         if (response.ok) {
-           alert('Your image has been successfully submitted. You can view and edit your submission on Are.na. Please check the message below for the link.');
-           document.getElementById('submissionForm').reset();
-           // Display success message with the link
-           document.getElementById('successMessage').innerHTML = 'Your image has been successfully submitted. You can view and edit your submission on Are.na: <br><a href="https://www.are.na/bree-d-5s66pyu4cqo/vcu-senior-show-2024" target="_blank">VCU Senior Show 2024 Channel</a>';
-           document.getElementById('successMessage').style.display = 'block';
-         } else {
-           const errorResponse = await response.json();
-           alert(`Failed to submit: ${errorResponse.message}. Please try again.`);
-         }
-       } catch (error) {
-         console.error('Submission error:', error);
-         alert('Failed to submit. Please try again.');
-       }
-     });
+               if (response.ok) {
+                   alert('Your image has been successfully submitted. You can view and edit your submission on Are.na. Please check the message below for the link.');
+                   document.getElementById('submissionForm').reset();
+                   // Display success message with the link
+                   document.getElementById('successMessage').style.display = 'block';
+               } else {
+                   const errorResponse = await response.json();
+                   alert(`Failed to submit: ${errorResponse.message}. Please try again.`);
+               }
+           } catch (error) {
+               console.error('Submission error:', error);
+               alert('Failed to submit. Please try again.');
+           }
+       });
    </script>
 
 
